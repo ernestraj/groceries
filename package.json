@@ -1,0 +1,67 @@
+{
+  "name": "app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@apollo/react-hooks": "^3.1.3",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "apollo-boost": "^0.4.7",
+    "apollo-client": "^2.6.4",
+    "bootstrap": "^4.4.1",
+    "form-urlencoded": "^4.1.3",
+    "graphql": "^14.6.0",
+    "react": "^16.12.0",
+    "react-bootstrap": "^1.0.0-beta.16",
+    "react-datepicker": "^2.13.0",
+    "react-dom": "^16.12.0",
+    "react-recaptcha-google": "^1.1.1",
+    "react-redux": "^7.1.3",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "^3.3.0",
+    "redux": "^4.0.5",
+    "redux-immutable-state-invariant": "^2.1.0",
+    "redux-thunk": "^2.3.0"
+  },
+  "scripts": {
+    "build-css": "node-sass src/ -o src/",
+    "start": "PORT=5000 react-app-rewired start",
+    "build": "react-app-rewired build && yarn run build:dist",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "dev": "react-scripts start",
+    "build-test": "REACT_APP_CAPITALRAISE_URL=https://test-capitalraise.finhaven.capital/graphql REACT_APP_FINHAVEN_CRM_URL=https://finhaven-crm.finhaven.club/index.php?entryPoint=WebToPersonCapture REACT_APP_RECAPTCHA_KEY=6LeBQNwUAAAAAIIPRtgfeLLzz9fbxhLzzf1qE7iZ react-scripts build",
+    "build-prod": "react-scripts build",
+    "//": "For testing, add -n to do a dry run",
+    "upload-test": "gsutil -m rsync -d -r -e -c -J ./build gs://test-landing.finhaven.capital",
+    "upload-prod": "gsutil -m rsync -d -r -e -c -J ./build gs://www.finhaven.capital",
+    "deploy-test": "yarn build-test && yarn upload-test && yarn invalidate-cache",
+    "deploy-prod": "yarn build-prod && yarn upload-prod && yarn invalidate-cache",
+    "lint": "eslint .",
+    "storybook": "start-storybook -p 9009 -s public",
+    "build-storybook": "build-storybook -s public",
+    "invalidate-cache": "source ./setupDeployEnv.sh && export RESULT=`curl -X POST https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE/purge_cache -H \"X-Auth-Email: $CLOUDFLARE_AUTH_EMAIL\" -H \"X-Auth-Key: $CLOUDFLARE_AUTH_KEY\" -H 'Content-Type: application/json' -d '{\"purge_everything\": true}'` && echo $RESULT"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "cra-build-watch": "^3.0.0",
+    "node-sass": "^4.13.0",
+    "react-app-rewired": "^2.1.5",
+    "sass-loader": "^8.0.0"
+  }
+}
