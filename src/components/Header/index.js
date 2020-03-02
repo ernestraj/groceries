@@ -3,10 +3,10 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as searchResultActions from "../../redux/actions/SearchResultActions";
 import { NavLink } from "react-router-dom";
+import SearchForm from "../SearchForm";
 
 class Header extends Component {
 	render() {
-		console.log(this.props);
 		return (
 			<nav className="navbar navbar-expand-lg navbar-light bg-light">
 				<a className="navbar-brand" href="#">
@@ -40,6 +40,7 @@ class Header extends Component {
 						))}
 					</ul>
 				</div>
+				<SearchForm />
 			</nav>
 		);
 	}

@@ -1,17 +1,31 @@
 import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import Header from "./components/Header";
+import Home from "./components/Home";
 
 class App extends Component {
 	render() {
 		return (
-			<div className="conainer">
-				<Header />
-			</div>
+			<Switch>
+				{this.props.links.map(route => {
+					return (
+						<Route
+							key={route.path}
+							exact
+							path={route.path}
+							render={props => <Home {...props} />}
+						/>
+					);
+				})}
+			</Switch>
 		);
 	}
 }
 
-export default App;
+function mapStateToProps(state) {
+	return {
+		links: state.content.menuLinks
+	};
+}
+
+export default connect(mapStateToProps, null)(App);
