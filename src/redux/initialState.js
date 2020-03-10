@@ -1,11 +1,11 @@
 export default {
-  menuLinks: [
-    { title: "Home", path: "/" },
-    { title: "About", path: "/about" },
-    { title: "Community", path: "/community" }
-  ],
-  error: {},
-  fetching: false,
-  titles: [],
-  grocery_item: ""
+  content: {
+    menuLinks: [
+      { title: "Home", path: "/" },
+      { title: "About", path: "/about" },
+      { title: "Community", path: "/community" },
+      { title: "Search", path: "/search" }
+    ]
+  },
+  titles: { grocery_item: "", titles: [] }
 };

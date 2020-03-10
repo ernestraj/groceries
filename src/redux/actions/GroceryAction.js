@@ -21,13 +21,6 @@ export function loadGroceriesSuccess(titles) {
   };
 }
 
-export function saveGroceryItemQuery(grocery_item) {
-  return {
-    type: actionTypes.SAVE_GROCERY_ITEM_QUERY,
-    grocery_item
-  };
-}
-
 export function loadGroceries(value = null) {
   return function(dispatch) {
     dispatch(loadGroceriesRequest());
@@ -40,5 +33,12 @@ export function loadGroceries(value = null) {
     }).then(function(response) {
       dispatch(loadGroceriesSuccess(response.data));
     });
+  };
+}
+
+export function saveGroceryItemQuery(grocery_item) {
+  return {
+    type: actionTypes.SAVE_GROCERY_ITEM_QUERY,
+    grocery_item
   };
 }

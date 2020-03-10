@@ -8,11 +8,10 @@ class SearchForm extends Component {
   constructor(props) {
     super(props);
     this.props.actions.loadGroceries();
-    console.log(this.props);
   }
 
   state = {
-    value: ""
+    value: this.props.grocery_item
   };
   onChange = e => {
     this.setState({ value: e.target.value });
@@ -24,7 +23,6 @@ class SearchForm extends Component {
   handleSubmit = event => {
     event.preventDefault();
     this.props.actions.saveGroceryItemQuery(this.state.value);
-    console.log(this.props.grocery_item);
   };
   render() {
     const { value } = this.state;
@@ -60,7 +58,7 @@ function mapStateToProps(state) {
     fetching: state.titles.fetching,
     error: state.titles.error,
     titles: state.titles.titles,
-    grocery_item: state
+    grocery_item: state.titles.grocery_item
   };
 }
 
