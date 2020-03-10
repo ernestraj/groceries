@@ -16,13 +16,15 @@ class SearchForm extends Component {
   };
   onChange = e => {
     this.setState({ value: e.target.value });
+    this.props.actions.loadGroceries(this.state.value);
   };
   onSelect = value => {
     this.setState({ value: value });
   };
   handleSubmit = event => {
     event.preventDefault();
-    console.log(this.state.value);
+    this.props.actions.saveGroceryItemQuery(this.state.value);
+    console.log(this.props.grocery_item);
   };
   render() {
     const { value } = this.state;
@@ -57,7 +59,8 @@ function mapStateToProps(state) {
   return {
     fetching: state.titles.fetching,
     error: state.titles.error,
-    titles: state.titles.titles
+    titles: state.titles.titles,
+    grocery_item: state
   };
 }
 

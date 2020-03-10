@@ -6,5 +6,6 @@ export default {
   ],
   error: {},
   fetching: false,
-  titles: []
+  titles: [],
+  grocery_item: ""
 };
