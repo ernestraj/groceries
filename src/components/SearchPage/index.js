@@ -1,10 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Header from "../Header";
 import * as GroceryAction from "../../redux/actions/GroceryAction";
 import { bindActionCreators } from "redux";
 
 class SearchPage extends Component {
+  constructor(props) {
+    super(props);
+    console.log(this.props);
+    //this.props.actions.loadGroceryITemsWithStore(this.props.grocery_item);
+  }
+
   render() {
     return <div id="search-page"></div>;
   }
