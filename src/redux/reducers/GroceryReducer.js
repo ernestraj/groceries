@@ -20,8 +20,7 @@ export default function GroceryReducer(state = initialState, action) {
         grocery_item: action.grocery_item
       };
     case actionTypes.SAVE_GROCERY_ITEM_QUERY:
-      const state_object = { ...state, grocery_item: action.grocery_item };
-      return state_object;
+      return { ...state, grocery_item: action.grocery_item };
     default:
       return state;
   }

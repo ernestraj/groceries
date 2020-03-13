@@ -6,11 +6,11 @@ import { bindActionCreators } from "redux";
 class SearchPage extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props);
-    //this.props.actions.loadGroceryITemsWithStore(this.props.grocery_item);
+    console.log(this.props.grocery_item);
   }
 
   render() {
+    console.log(this.props.location);
     return <div id="search-page"></div>;
   }
 }
@@ -18,7 +18,7 @@ class SearchPage extends Component {
 function mapStateToProps(state) {
   return {
     search_results: state.titles.search_results,
-    grocery_item: state.titles.grocery_item
+    location: state.router.location
   };
 }
 

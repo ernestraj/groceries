@@ -3,20 +3,22 @@ import ReactDOM from "react-dom";
 
 import "./index.scss";
 import App from "./App";
+import { withRouter } from "react-router-dom";
 import * as serviceWorker from "./serviceWorker";
 import "bootstrap/dist/css/bootstrap.min.css";
-import configureStore from "./redux/configureStore";
+import configureStore, { history } from "./redux/configureStore";
 import { Provider as ReduxProvider } from "react-redux";
-import { BrowserRouter as Router } from "react-router-dom";
+import { ConnectedRouter } from "connected-react-router";
 import initialState from "./redux/initialState";
 
 const store = configureStore(initialState);
+const AppWithRouter = withRouter(App);
 
 ReactDOM.render(
   <ReduxProvider store={store}>
-    <Router>
-      <App />
-    </Router>
+    <ConnectedRouter history={history}>
+      <AppWithRouter />
+    </ConnectedRouter>
   </ReduxProvider>,
   document.getElementById("root")
 );
