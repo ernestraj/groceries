@@ -9,11 +9,24 @@ class SearchForm extends Component {
   constructor(props) {
     super(props);
     this.props.actions.loadGroceries();
+    this.position();
   }
 
   state = {
     value: this.props.grocery_item ? this.props.grocery_item.title : "",
-    redirect: false
+    redirect: false,
+    latitude: null,
+    longitude: null
+  };
+  position = () => {
+    navigator.geolocation.getCurrentPosition(
+      position =>
+        this.setState({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude
+        }),
+      err => console.log(err)
+    );
   };
   onChange = e => {
     this.setState({ value: e.target.value });
@@ -29,16 +42,20 @@ class SearchForm extends Component {
   };
   handleSubmit = event => {
     event.preventDefault();
-    const element = this.props.titles.find(function(element) {
+    const grocery_item = this.props.titles.find(function(element) {
       if (element.title === this.state.value) {
         return element;
       }
     }, this);
-    this.props.actions.saveGroceryItemQuery(element);
+    this.props.actions.loadGroceryITemsWithStore(
+      grocery_item,
+      this.state.latitude,
+      this.state.longitude
+    );
     this.setRedirect();
   };
   renderRedirect = searched_item => {
-    if (this.state.redirect) {
+    if (this.state.redirect && this.props.location.pathname != "/search") {
       return (
         <Redirect push to={{ pathname: "/search", state: { searched_item } }} />
       );
@@ -84,7 +101,9 @@ function mapStateToProps(state) {
     fetching: state.titles.fetching,
     error: state.titles.error,
     titles: state.titles.titles,
-    grocery_item: state.titles.grocery_item
+    grocery_item: state.titles.grocery_item,
+    location: state.router.location,
+    search_results: state.titles.search_results
   };
 }
 

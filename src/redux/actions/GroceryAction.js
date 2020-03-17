@@ -45,18 +45,42 @@ export function loadGroceriesWithStoreRequest() {
   };
 }
 
-export function loadGroceriesWithStoreSuccess(content) {
+export function loadGroceriesWithStoreSuccess(search_results) {
   return {
     type: actionTypes.LOAD_GROCERY_SEARCH_RESULTS_WITH_STORE_SUCCESS,
     error: false,
     fetching: true,
-    content
+    search_results
   };
 }
 
-export function loadGroceryITemsWithStore(nid = null) {
+export function loadGroceryITemsWithStore(
+  grocery_item,
+  latitude = null,
+  longitude = null
+) {
   return function(dispatch) {
     dispatch(loadGroceriesWithStoreRequest());
+    dispatch(saveGroceryItemQuery(grocery_item));
+    const url = latitude
+      ? uri +
+        "/item/" +
+        grocery_item.nid +
+        "?latitude=" +
+        latitude +
+        "&longitude=" +
+        longitude
+      : uri + "/item/" + grocery_item.nid;
+    axios({
+      method: "get",
+      url: uri + "/item/" + grocery_item.nid,
+      params: {
+        latitude: latitude,
+        longitude: longitude
+      }
+    }).then(function(response) {
+      dispatch(loadGroceriesWithStoreSuccess(response.data));
+    });
   };
 }
 

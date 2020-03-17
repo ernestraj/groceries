@@ -4,21 +4,41 @@ import * as GroceryAction from "../../redux/actions/GroceryAction";
 import { bindActionCreators } from "redux";
 
 class SearchPage extends Component {
-  constructor(props) {
-    super(props);
-    console.log(this.props.grocery_item);
-  }
-
   render() {
-    console.log(this.props.location);
-    return <div id="search-page"></div>;
+    return (
+      <div id="search-page">
+        {this.props.search_results.map(item => {
+          return (
+            <div key={item.field_grocery_aisle} className="search-item">
+              <h2>
+                <span>{item.field_brand}</span>
+              </h2>
+              {item.distance && (
+                <h3>
+                  <label>Distance</label>
+                  <span>{item.distance} </span>
+                </h3>
+              )}
+              <h3>
+                <label>Aisle</label>
+                <span>{item.field_grocery_aisle} </span>
+              </h3>
+              <p>
+                <label>Address</label>
+                <span>{item.name} </span>
+              </p>
+            </div>
+          );
+        })}
+      </div>
+    );
   }
 }
 
 function mapStateToProps(state) {
   return {
     search_results: state.titles.search_results,
-    location: state.router.location
+    grocery_item: state.titles.grocery_item
   };
 }
 

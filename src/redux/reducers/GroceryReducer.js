@@ -8,8 +8,7 @@ export default function GroceryReducer(state = initialState, action) {
         ...state,
         error: action.error,
         fetching: action.fetching,
-        titles: action.titles,
-        grocery_item: action.grocery_item
+        titles: action.titles
       };
     case actionTypes.LOAD_GROCERY_AUTOCOMPLETE_SUCCESS:
       return {
@@ -21,6 +20,19 @@ export default function GroceryReducer(state = initialState, action) {
       };
     case actionTypes.SAVE_GROCERY_ITEM_QUERY:
       return { ...state, grocery_item: action.grocery_item };
+    case actionTypes.LOAD_GROCERY_SEARCH_RESULTS_WITH_STORE_REQUEST:
+      return {
+        ...state,
+        error: action.error,
+        fetching: action.fetching
+      };
+    case actionTypes.LOAD_GROCERY_SEARCH_RESULTS_WITH_STORE_SUCCESS:
+      return {
+        ...state,
+        error: action.error,
+        fetching: action.fetching,
+        search_results: action.search_results
+      };
     default:
       return state;
   }

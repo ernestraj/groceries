@@ -7,5 +7,5 @@ export default {
       { title: "Search", path: "/search" }
     ]
   },
-  titles: { grocery_item: "", titles: [] }
+  titles: { titles: [], search_results: [] }
 };
