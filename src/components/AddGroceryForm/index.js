@@ -3,15 +3,19 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import Autocomplete from "react-autocomplete";
 import * as GroceryItemAction from "../../redux/actions/GroceryItemAction";
+import * as GroceryAction from "../../redux/actions/GroceryAction";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
-import "react-google-places-autocomplete/dist/assets/index.css";
+
+import "./index.css";
 
 class AddGroceryForm extends Component {
   constructor(props) {
     super(props);
     this.props.actions.getBrands();
+    this.props.actions.loadGroceries();
+    this.props.actions.getAisles();
   }
   grocerySchema = Yup.object().shape({
     brand: Yup.string().required("Required"),
@@ -20,14 +24,19 @@ class AddGroceryForm extends Component {
     groceryName: Yup.string().required("Required")
   });
   render() {
+    console.log(this.props.brands);
+    console.log(this.props.aisles);
     return (
       <div>
         <Formik
           initialValues={{
             brand: "",
+            brand_id: "",
             address: "",
             aisle: "",
+            aisle_id: "",
             groceryName: "",
+            grocery_id: "",
             price: "",
             description: ""
           }}
@@ -113,13 +122,17 @@ function mapStateToProps(state) {
   return {
     fetching: state.brands.fetching,
     error: state.brands.error,
-    brands: state.brands.brands
+    brands: state.brands.brands,
+    aisle: state.brands.aisle
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(GroceryItemAction, dispatch)
+    actions: bindActionCreators(
+      Object.assign({}, GroceryItemAction, GroceryAction),
+      dispatch
+    )
   };
 }
 
