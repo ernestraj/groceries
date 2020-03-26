@@ -24,8 +24,6 @@ class AddGroceryForm extends Component {
     groceryName: Yup.string().required("Required")
   });
   render() {
-    console.log(this.props.brands);
-    console.log(this.props.aisles);
     return (
       <div>
         <Formik
@@ -42,13 +40,31 @@ class AddGroceryForm extends Component {
           }}
           validationSchema={this.grocerySchema}
           onSubmit={values => {
-            // same shape as initial values
-            console.log(values);
+            values = {
+              ...values,
+              brand_id: this.props.brands.find(function(item) {
+                if (item.name === values.brand) {
+                  return item;
+                }
+              }),
+              aisle_id: this.props.aisles.find(function(item) {
+                if (item.name === values.aisle) {
+                  return item;
+                }
+              }),
+              grocery_id: this.props.groceries.find(function(item) {
+                if (item.title === values.groceryName) {
+                  return item;
+                }
+              })
+            };
+            this.props.actions.saveGroceryItem(values);
           }}
         >
           {({ errors, touched, setFieldValue, values }) => (
             <Form>
               <Autocomplete
+                name="brand"
                 getItemValue={item => item.name}
                 items={this.props.brands ? this.props.brands : []}
                 renderItem={(item, isHighlighted) => (
@@ -62,7 +78,6 @@ class AddGroceryForm extends Component {
                   </div>
                 )}
                 value={values.brand}
-                placeholder="brand"
                 onChange={e => setFieldValue("brand", e.target.value)}
                 onSelect={val => setFieldValue("brand", val)}
                 placeholder="Brand/Store Name"
@@ -85,13 +100,49 @@ class AddGroceryForm extends Component {
               {errors.address && touched.address ? (
                 <div>{errors.address}</div>
               ) : null}
-              <Field name="aisle" placeholder="Aisle" />
+              <Autocomplete
+                name="aisle"
+                getItemValue={item => item.name}
+                items={this.props.aisles ? this.props.aisles : []}
+                renderItem={(item, isHighlighted) => (
+                  <div
+                    key={item.tid}
+                    style={{
+                      background: isHighlighted ? "lightgray" : "white"
+                    }}
+                  >
+                    {item.name}
+                  </div>
+                )}
+                value={values.aisle}
+                onChange={e => setFieldValue("aisle", e.target.value)}
+                onSelect={val => setFieldValue("aisle", val)}
+                placeholder="Aisle"
+              />
               <small>
                 ex: 1/2/116 Aisle number a number value where this grocery item
                 is located
               </small>
               {errors.aisle && touched.aisle ? <div>{errors.aisle}</div> : null}
-              <Field name="groceryName" placeholder="Name" />
+              <Autocomplete
+                name="groceryName"
+                getItemValue={item => item.title}
+                items={this.props.groceries ? this.props.groceries : []}
+                renderItem={(item, isHighlighted) => (
+                  <div
+                    key={item.nid}
+                    style={{
+                      background: isHighlighted ? "lightgray" : "white"
+                    }}
+                  >
+                    {item.title}
+                  </div>
+                )}
+                value={values.groceryName}
+                onChange={e => setFieldValue("groceryName", e.target.value)}
+                onSelect={val => setFieldValue("groceryName", val)}
+                placeholder="Grocery Name"
+              />
               <small>
                 Name of the grocery item which you want to add in the system.{" "}
               </small>
@@ -123,7 +174,8 @@ function mapStateToProps(state) {
     fetching: state.brands.fetching,
     error: state.brands.error,
     brands: state.brands.brands,
-    aisle: state.brands.aisle
+    aisles: state.brands.aisles,
+    groceries: state.titles.titles
   };
 }
 

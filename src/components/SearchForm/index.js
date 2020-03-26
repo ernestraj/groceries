@@ -42,7 +42,7 @@ class SearchForm extends Component {
   };
   handleSubmit = event => {
     event.preventDefault();
-    const grocery_item = this.props.titles.find(function(element) {
+    const grocery_item = this.props.titles.filter(function(element) {
       if (element.title === this.state.value) {
         return element;
       }
@@ -55,7 +55,7 @@ class SearchForm extends Component {
     this.setRedirect();
   };
   renderRedirect = searched_item => {
-    if (this.state.redirect && this.props.location.pathname != "/search") {
+    if (this.state.redirect && this.props.location.pathname !== "/search") {
       return (
         <Redirect push to={{ pathname: "/search", state: { searched_item } }} />
       );

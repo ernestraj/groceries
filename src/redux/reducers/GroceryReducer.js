@@ -7,9 +7,9 @@ export default function GroceryReducer(state = initialState, action) {
       return {
         ...state,
         error: action.error,
-        fetching: action.fetching,
-        titles: action.titles
+        fetching: action.fetching
       };
+
     case actionTypes.LOAD_GROCERY_AUTOCOMPLETE_SUCCESS:
       return {
         ...state,

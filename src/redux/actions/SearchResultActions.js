@@ -1,11 +1,4 @@
 import * as actionTypes from "./actionTypes";
-import ApolloClient from "apollo-boost";
-
-const uri = process.env.REACT_APP_CMS_URL;
-
-const client = new ApolloClient({
-  uri
-});
 
 export function loadSearchResultRequest() {
   return {

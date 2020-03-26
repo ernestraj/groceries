@@ -62,15 +62,6 @@ export function loadGroceryITemsWithStore(
   return function(dispatch) {
     dispatch(loadGroceriesWithStoreRequest());
     dispatch(saveGroceryItemQuery(grocery_item));
-    const url = latitude
-      ? uri +
-        "/item/" +
-        grocery_item.nid +
-        "?latitude=" +
-        latitude +
-        "&longitude=" +
-        longitude
-      : uri + "/item/" + grocery_item.nid;
     axios({
       method: "get",
       url: uri + "/item/" + grocery_item.nid,
