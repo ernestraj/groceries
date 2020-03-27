@@ -81,6 +81,7 @@ export function saveGroceryItemSuccess() {
 }
 
 export function saveGroceryItem(values) {
+  console.log(values);
   return function(dispatch) {
     dispatch(saveGroceryItemInProgress);
     const {
@@ -89,27 +90,30 @@ export function saveGroceryItem(values) {
       address,
       aisle,
       aisle_id,
-      grocery,
+      groceryName,
       grocery_id,
       description
     } = values;
-    axios({
-      method: "post",
-      url: uri + "/item/create",
-      data: {
-        brand,
-        brand_id: brand_id.tid,
-        address: address.description,
-        grocery,
-        grocery_id: grocery_id.nid,
-        aisle,
-        aisle_id: aisle_id.tid,
-        description
-      },
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
+
+    axios
+      .post(
+        uri + "/item/create",
+        {
+          brand,
+          brand_id: brand_id.tid,
+          address: address.description,
+          grocery: groceryName,
+          grocery_id: grocery_id.nid,
+          aisle,
+          aisle_id: aisle_id.tid,
+          description
+        },
+        {
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
+      )
       .then(function(response) {
         dispatch(saveGroceryItemSuccess());
       })

@@ -47,7 +47,7 @@ class SearchForm extends Component {
         return element;
       }
     }, this);
-    this.props.actions.loadGroceryITemsWithStore(
+    this.props.actions.loadGroceryItemsWithStore(
       grocery_item,
       this.state.latitude,
       this.state.longitude

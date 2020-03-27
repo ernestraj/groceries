@@ -54,7 +54,7 @@ export function loadGroceriesWithStoreSuccess(search_results) {
   };
 }
 
-export function loadGroceryITemsWithStore(
+export function loadGroceryItemsWithStore(
   grocery_item,
   latitude = null,
   longitude = null
@@ -64,7 +64,7 @@ export function loadGroceryITemsWithStore(
     dispatch(saveGroceryItemQuery(grocery_item));
     axios({
       method: "get",
-      url: uri + "/item/" + grocery_item.nid,
+      url: uri + "/item/" + grocery_item[0].nid,
       params: {
         latitude: latitude,
         longitude: longitude
