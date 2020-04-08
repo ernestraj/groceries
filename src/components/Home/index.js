@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Header from "../Header";
 import SearchPage from "../SearchPage";
 import AddGroceryForm from "../AddGroceryForm";
+import RegistrationForm from "../RegistrationForm";
 
 class Home extends Component {
   render() {
@@ -11,6 +12,7 @@ class Home extends Component {
         <Header />
         {pathname === "/search" && <SearchPage />}
         {pathname === "/add-grocery-item" && <AddGroceryForm />}
+        {pathname === "/register" && <RegistrationForm />}
       </div>
     );
   }

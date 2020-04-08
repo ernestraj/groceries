@@ -81,9 +81,8 @@ export function saveGroceryItemSuccess() {
 }
 
 export function saveGroceryItem(values) {
-  console.log(values);
   return function(dispatch) {
-    dispatch(saveGroceryItemInProgress);
+    dispatch(saveGroceryItemInProgress());
     const {
       brand,
       brand_id,
