@@ -15,7 +15,7 @@ export default function GroceryReducer(state = initialState, action) {
         ...state,
         progress: action.progress,
         error: action.error,
-        login: action.login
+        registrationSuccessful: action.registrationSuccessful
       };
 
     case actionTypes.USER_REGISTRATION_CATCH_ERROR:

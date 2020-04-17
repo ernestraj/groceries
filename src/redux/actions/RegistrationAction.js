@@ -19,12 +19,12 @@ export function userRegistrationCatchError(msg) {
   };
 }
 
-export function userRegistrationSuccess(login) {
+export function userRegistrationSuccess(registrationSuccessful) {
   return {
     type: actionTypes.USER_REGISTRATION_SUCCESS,
     progress: false,
     error: false,
-    login
+    registrationSuccessful
   };
 }
 

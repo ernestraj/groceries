@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import * as RegistrationAction from "../../redux/actions/RegistrationAction";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
+import { Redirect } from "react-router";
 
 class RegistrationForm extends Component {
   registrationSchema = Yup.object().shape({
@@ -19,8 +20,9 @@ class RegistrationForm extends Component {
     lastName: Yup.string().required("Last Name is Required")
   });
   render() {
-    console.log("hello");
-    console.log(this.props.error);
+    if (this.props.registrationSuccessful) {
+      return <Redirect to={"/pending-confirmation"} />;
+    }
     return (
       <div>
         <Formik
@@ -76,7 +78,7 @@ function mapStateToProps(state) {
   return {
     progress: state.register.progress,
     error: state.register.error,
-    login: state.register.login
+    registrationSuccessful: state.register.registrationSuccessful
   };
 }
 
