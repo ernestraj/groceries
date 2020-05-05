@@ -5,12 +5,13 @@ import AddGroceryForm from "../AddGroceryForm";
 import RegistrationForm from "../RegistrationForm";
 import Login from "../Login";
 import Dishes from "../Dishes";
+import "./index.scss";
 
 class Home extends Component {
 	render() {
 		const { pathname } = this.props.location;
 		return (
-			<div className="container">
+			<div id="content">
 				<Header />
 				{pathname === "/search" && <SearchPage />}
 				{pathname === "/add-grocery-item" && <AddGroceryForm />}

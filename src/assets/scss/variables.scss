@@ -1,12 +1,13 @@
-
-$card-blue:  rgba(0,20,116,0.7) !default;
+$card-blue: rgba(0, 20, 116, 0.7) !default;
 $footer-bg: #121212 !default;
 
-$faq-border: #D8D8D8 !default;
-$button-color: #4B5DAE !default;
+$faq-border: #d8d8d8 !default;
+$button-color: #4b5dae !default;
 $dark-gray: #585858 !default;
 
 $theme-colors: (
-  "darker": #121212
+	"darker": #121212,
 );
 
+$primary-font: "Galano", Georgia, Times, serif;
+$primary-background-color: #ffc629;

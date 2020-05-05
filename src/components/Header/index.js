@@ -4,11 +4,12 @@ import { connect } from "react-redux";
 import * as searchResultActions from "../../redux/actions/SearchResultActions";
 import { NavLink } from "react-router-dom";
 import SearchForm from "../SearchForm";
+import "./index.scss";
 
 class Header extends Component {
 	render() {
 		return (
-			<nav className="navbar navbar-expand-lg navbar-light bg-light">
+			<nav className="navbar navbar-expand-lg navbar-light header__inner">
 				<a className="navbar-brand" href="#">
 					Groceries
 				</a>
@@ -26,7 +27,7 @@ class Header extends Component {
 
 				<div className="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul className={"navbar-nav align-items-lg-center ixm-nav"}>
-						{this.props.links.map(link => (
+						{this.props.links.map((link) => (
 							<li key={link.path} className={"nav-item mb-4 mb-lg-0"}>
 								<NavLink
 									key={link.path}
@@ -48,13 +49,13 @@ class Header extends Component {
 
 function mapStateToProps(state) {
 	return {
-		links: state.content.menuLinks
+		links: state.content.menuLinks,
 	};
 }
 
 function mapDispatchToProps(dispatch) {
 	return {
-		actions: bindActionCreators(searchResultActions, dispatch)
+		actions: bindActionCreators(searchResultActions, dispatch),
 	};
 }
 
