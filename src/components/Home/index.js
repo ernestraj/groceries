@@ -5,6 +5,7 @@ import AddGroceryForm from "../AddGroceryForm";
 import RegistrationForm from "../RegistrationForm";
 import Login from "../Login";
 import Dishes from "../Dishes";
+import HomePage from "../HomePage";
 import "./index.scss";
 
 class Home extends Component {
@@ -13,6 +14,7 @@ class Home extends Component {
 		return (
 			<div id="content">
 				<Header />
+				{pathname === "/" && <HomePage />}
 				{pathname === "/search" && <SearchPage />}
 				{pathname === "/add-grocery-item" && <AddGroceryForm />}
 				{pathname === "/register" && <RegistrationForm />}

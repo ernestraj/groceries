@@ -1,4 +1,6 @@
 @import "../../assets/scss/variables.scss";
-#content {
+
+.btn-hightlight {
 	background-color: $primary-background-color;
+	border-color: $primary-background-color;
 }

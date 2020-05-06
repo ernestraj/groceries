@@ -10,7 +10,7 @@ class Header extends Component {
 	render() {
 		return (
 			<nav className="navbar navbar-expand-lg navbar-light header__inner">
-				<a className="navbar-brand" href="#">
+				<a className="navbar-brand" href="/">
 					Groceries
 				</a>
 				<button

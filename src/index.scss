@@ -1,5 +1,21 @@
 @import "./assets/scss/variables.scss";
 // bootstrap 4
 @import "~bootstrap/scss/bootstrap";
-
 @import "./assets/scss/styles.scss";
+
+#content {
+	background-color: $primary-background-color;
+}
+
+.btn-highlight,
+.btn-bg-highlight:hover {
+	background-color: $primary-background-color;
+	border-color: $primary-background-color;
+}
+
+.btn-bg-highlight,
+.btn-highlight:hover {
+	color: $primary-background-color;
+	border-color: $primary-background-color;
+	background-color: #fff;
+}
