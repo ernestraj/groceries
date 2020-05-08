@@ -7,85 +7,117 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router";
 
 class RegistrationForm extends Component {
-  registrationSchema = Yup.object().shape({
-    email: Yup.string()
-      .email()
-      .required("Email field is Required"),
-    password: Yup.string().required("Password is required"),
-    passwordConfirmation: Yup.string().oneOf(
-      [Yup.ref("password"), null],
-      "Passwords must match"
-    ),
-    firstName: Yup.string().required("First Name is Required"),
-    lastName: Yup.string().required("Last Name is Required")
-  });
-  render() {
-    if (this.props.registrationSuccessful) {
-      return <Redirect to={"/pending-confirmation"} />;
-    }
-    return (
-      <div>
-        <Formik
-          initialValues={{
-            firstName: "",
-            lastName: "",
-            middleName: "",
-            email: "",
-            password: "",
-            passwordConfirmation: ""
-          }}
-          validationSchema={this.registrationSchema}
-          onSubmit={values => {
-            this.props.actions.registerUser(values);
-          }}
-        >
-          {({ errors, touched, setFieldValue, values }) => (
-            <Form>
-              <Field name="firstName" placeholder="First Name" />
-              {errors.firstName && touched.firstName ? (
-                <div>{errors.firstName}</div>
-              ) : null}
-              <Field name="middleName" placeholder="Middle Name" />
-              <small>It is Optional</small>
-              <Field name="lastName" placeholder="Last Name" />
-              {errors.lastName && touched.lastName ? (
-                <div>{errors.lastName}</div>
-              ) : null}
-              <Field name="email" placeholder="Email" />
-              {errors.email && touched.email ? <div>{errors.email}</div> : null}
-              <Field name="password" placeholder="Password" type="password" />
-              {errors.password && touched.password ? (
-                <div>{errors.password}</div>
-              ) : null}
-              <Field
-                name="passwordConfirmation"
-                placeholder="Confirm Password"
-                type="password"
-              />
-              {errors.passwordConfirmation && touched.passwordConfirmation ? (
-                <div>{errors.passwordConfirmation}</div>
-              ) : null}
-              <button type="submit">Submit</button>
-            </Form>
-          )}
-        </Formik>
-      </div>
-    );
-  }
+	registrationSchema = Yup.object().shape({
+		email: Yup.string().email().required("Email field is Required"),
+		password: Yup.string().required("Password is required"),
+		passwordConfirmation: Yup.string().oneOf(
+			[Yup.ref("password"), null],
+			"Passwords must match"
+		),
+		firstName: Yup.string().required("First Name is Required"),
+		lastName: Yup.string().required("Last Name is Required"),
+	});
+	render() {
+		if (this.props.registrationSuccessful) {
+			return <Redirect to={"/pending-confirmation"} />;
+		}
+		return (
+			<div className="container">
+				<Formik
+					initialValues={{
+						firstName: "",
+						lastName: "",
+						middleName: "",
+						email: "",
+						password: "",
+						passwordConfirmation: "",
+					}}
+					validationSchema={this.registrationSchema}
+					onSubmit={(values) => {
+						this.props.actions.registerUser(values);
+					}}
+				>
+					{({ errors, touched, setFieldValue, values }) => (
+						<Form>
+							<div className="row mt-1 form-item">
+								<div className="col-4">
+									<Field name="firstName" placeholder="First Name" />
+									{errors.firstName && touched.firstName ? (
+										<div className="error mt-1">{errors.firstName}</div>
+									) : null}
+								</div>
+								<div className="col-4">
+									<Field name="middleName" placeholder="Middle Name" />
+									<small>It is Optional</small>
+								</div>
+								<div className="col-4">
+									<Field name="lastName" placeholder="Last Name" />
+									{errors.lastName && touched.lastName ? (
+										<div className="error mt-1">{errors.lastName}</div>
+									) : null}
+								</div>
+							</div>
+							<div className="row mt-4 form-item">
+								<div className="col-4">
+									<Field name="email" placeholder="Email" />
+									{errors.email && touched.email ? (
+										<div className="error mt-1">{errors.email}</div>
+									) : null}
+								</div>
+								<div className="col-4">
+									<Field
+										name="password"
+										placeholder="Password"
+										type="password"
+									/>
+									{errors.password && touched.password ? (
+										<div className="error mt-1">{errors.password}</div>
+									) : null}
+								</div>
+								<div className="col-4">
+									<Field
+										name="passwordConfirmation"
+										placeholder="Confirm Password"
+										type="password"
+									/>
+									{errors.passwordConfirmation &&
+									touched.passwordConfirmation ? (
+										<div className="error mt-1">
+											{errors.passwordConfirmation}
+										</div>
+									) : null}
+								</div>
+							</div>
+							<div className="row mt-4 form-item">
+								<div className="col text-center">
+									<button
+										className="btn btn-primary btn-bg-highlight"
+										type="submit"
+									>
+										Submit
+									</button>
+								</div>
+							</div>
+						</Form>
+					)}
+				</Formik>
+			</div>
+		);
+	}
 }
 
 function mapStateToProps(state) {
-  return {
-    progress: state.register.progress,
-    error: state.register.error,
-    registrationSuccessful: state.register.registrationSuccessful
-  };
+	return {
+		progress: state.register.progress,
+		error: state.register.error,
+		registrationSuccessful: state.register.registrationSuccessful,
+	};
 }
 
 function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(RegistrationAction, dispatch)
-  };
+	return {
+		actions: bindActionCreators(RegistrationAction, dispatch),
+	};
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegistrationForm);

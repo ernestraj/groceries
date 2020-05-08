@@ -19,3 +19,16 @@
 	border-color: $primary-background-color;
 	background-color: #fff;
 }
+
+.form-item > div > div,
+.form-item div > input {
+	width: 100%;
+}
+
+.form-item .btn-bg-highlight:hover {
+	border-color: #fff;
+}
+
+.error {
+	color: red;
+}

@@ -1,7 +1,11 @@
 import * as actionTypes from "./actionTypes";
 import axios from "axios";
+import qs from "querystring";
 
 const uri = process.env.REACT_APP_CMS_URL;
+const grant_type = process.env.REACT_APP_GRANT_TYPE;
+const client_id = process.env.REACT_APP_CLIENT_ID;
+const client_secret = process.env.REACT_APP_CLIENT_SECRET;
 
 export function userRegistrationInProgress() {
 	return {
@@ -32,8 +36,6 @@ export function registerUser(values) {
 	return function (dispatch) {
 		dispatch(userRegistrationInProgress());
 		const { firstName, middleName, lastName, password, email } = values;
-		console.log(uri);
-		console.log(values);
 		axios
 			.post(
 				uri + "/user/register",
@@ -67,8 +69,56 @@ export function registerUser(values) {
 				}
 			)
 			.then(function (response) {
-				console.log(response);
 				dispatch(userRegistrationSuccess(true));
+			})
+			.catch((err) => {
+				let msg = "";
+				if (err.response.data.message.split(":")[2]) {
+					msg = "Email has already been taken.";
+				}
+				dispatch(userRegistrationCatchError(msg));
+			});
+	};
+}
+
+export function userLoginInProgress() {
+	return {
+		type: actionTypes.USER_LOGIN_IN_PROGRESS,
+		progress: true,
+		error: false,
+	};
+}
+
+export function userLoginSuccess(data) {
+	return {
+		type: actionTypes.USER_LOGIN_SUCCESS,
+		progress: false,
+		error: false,
+		data,
+	};
+}
+
+export function loginUser(values) {
+	return function (dispatch) {
+		dispatch(userLoginInProgress());
+		const { email, password } = values;
+		const data = {
+			grant_type,
+			client_id,
+			client_secret,
+			username: email,
+			password,
+		};
+		axios
+			.post(uri + "/oauth/token", qs.stringify(data), {
+				headers: {
+					"Content-Type": "application/x-www-form-urlencoded",
+				},
+			})
+			.then(function (response) {
+				localStorage.setItem("ACCESS_TOKEN", response.data.access_token);
+				localStorage.setItem("REFRESH_TOKEN", response.data.refresh_token);
+				dispatch(userLoginSuccess(true));
 			})
 			.catch((err) => {
 				let msg = "";
