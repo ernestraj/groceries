@@ -89,12 +89,12 @@ export function userLoginInProgress() {
 	};
 }
 
-export function userLoginSuccess(data) {
+export function userLoginSuccess(login) {
 	return {
 		type: actionTypes.USER_LOGIN_SUCCESS,
 		progress: false,
 		error: false,
-		data,
+		login,
 	};
 }
 
@@ -118,6 +118,7 @@ export function loginUser(values) {
 			.then(function (response) {
 				localStorage.setItem("ACCESS_TOKEN", response.data.access_token);
 				localStorage.setItem("REFRESH_TOKEN", response.data.refresh_token);
+				localStorage.setItem("USER_ID", response.data.user_id);
 				dispatch(userLoginSuccess(true));
 			})
 			.catch((err) => {

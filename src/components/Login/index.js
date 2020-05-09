@@ -14,7 +14,7 @@ class Login extends Component {
 	});
 	render() {
 		if (this.props.login) {
-			return <Redirect to={"/pending-confirmation"} />;
+			return <Redirect to={"/add-grocery-item"} />;
 		}
 		return (
 			<div className="container">
@@ -75,6 +75,7 @@ class Login extends Component {
 }
 
 function mapStateToProps(state) {
+	console.log(state);
 	return {
 		progress: state.register.progress,
 		error: state.register.error,
