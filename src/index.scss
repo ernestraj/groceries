@@ -8,13 +8,17 @@
 }
 
 .btn-highlight,
-.btn-bg-highlight:hover {
+.btn-bg-highlight:hover,
+.btn-bg-highlight:focus,
+.btn-bg-highlight:not(:disabled):not(.disabled):active {
 	background-color: $primary-background-color;
 	border-color: $primary-background-color;
 }
 
 .btn-bg-highlight,
-.btn-highlight:hover {
+.btn-highlight:hover,
+.btn-highlight:focus,
+.btn-highlight:not(:disabled):not(.disabled):active {
 	color: $primary-background-color;
 	border-color: $primary-background-color;
 	background-color: #fff;

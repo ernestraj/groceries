@@ -75,7 +75,6 @@ class Login extends Component {
 }
 
 function mapStateToProps(state) {
-	console.log(state);
 	return {
 		progress: state.register.progress,
 		error: state.register.error,

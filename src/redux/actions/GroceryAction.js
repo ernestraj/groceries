@@ -106,7 +106,6 @@ export function loadDishes() {
 			method: "get",
 			url: uri + "/dishes",
 		}).then(function (response) {
-			console.log(response.data);
 			dispatch(loadDishesSuccess(response.data));
 		});
 	};

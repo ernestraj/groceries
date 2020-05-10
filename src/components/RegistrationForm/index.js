@@ -23,84 +23,86 @@ class RegistrationForm extends Component {
 		}
 		return (
 			<div className="container">
-				<Formik
-					initialValues={{
-						firstName: "",
-						lastName: "",
-						middleName: "",
-						email: "",
-						password: "",
-						passwordConfirmation: "",
-					}}
-					validationSchema={this.registrationSchema}
-					onSubmit={(values) => {
-						this.props.actions.registerUser(values);
-					}}
-				>
-					{({ errors, touched, setFieldValue, values }) => (
-						<Form>
-							<div className="row mt-1 form-item">
-								<div className="col-4">
-									<Field name="firstName" placeholder="First Name" />
-									{errors.firstName && touched.firstName ? (
-										<div className="error mt-1">{errors.firstName}</div>
-									) : null}
+				<div className="jumbotron">
+					<Formik
+						initialValues={{
+							firstName: "",
+							lastName: "",
+							middleName: "",
+							email: "",
+							password: "",
+							passwordConfirmation: "",
+						}}
+						validationSchema={this.registrationSchema}
+						onSubmit={(values) => {
+							this.props.actions.registerUser(values);
+						}}
+					>
+						{({ errors, touched, setFieldValue, values }) => (
+							<Form>
+								<div className="row mt-1 form-item">
+									<div className="col-4">
+										<Field name="firstName" placeholder="First Name" />
+										{errors.firstName && touched.firstName ? (
+											<div className="error mt-1">{errors.firstName}</div>
+										) : null}
+									</div>
+									<div className="col-4">
+										<Field name="middleName" placeholder="Middle Name" />
+										<small>It is Optional</small>
+									</div>
+									<div className="col-4">
+										<Field name="lastName" placeholder="Last Name" />
+										{errors.lastName && touched.lastName ? (
+											<div className="error mt-1">{errors.lastName}</div>
+										) : null}
+									</div>
 								</div>
-								<div className="col-4">
-									<Field name="middleName" placeholder="Middle Name" />
-									<small>It is Optional</small>
+								<div className="row mt-4 form-item">
+									<div className="col-4">
+										<Field name="email" placeholder="Email" />
+										{errors.email && touched.email ? (
+											<div className="error mt-1">{errors.email}</div>
+										) : null}
+									</div>
+									<div className="col-4">
+										<Field
+											name="password"
+											placeholder="Password"
+											type="password"
+										/>
+										{errors.password && touched.password ? (
+											<div className="error mt-1">{errors.password}</div>
+										) : null}
+									</div>
+									<div className="col-4">
+										<Field
+											name="passwordConfirmation"
+											placeholder="Confirm Password"
+											type="password"
+										/>
+										{errors.passwordConfirmation &&
+										touched.passwordConfirmation ? (
+											<div className="error mt-1">
+												{errors.passwordConfirmation}
+											</div>
+										) : null}
+									</div>
 								</div>
-								<div className="col-4">
-									<Field name="lastName" placeholder="Last Name" />
-									{errors.lastName && touched.lastName ? (
-										<div className="error mt-1">{errors.lastName}</div>
-									) : null}
+								<div className="row mt-4 form-item">
+									<div className="col text-center">
+										<button
+											className="btn btn-primary btn-bg-highlight"
+											type="submit"
+										>
+											Register
+										</button>
+									</div>
 								</div>
-							</div>
-							<div className="row mt-4 form-item">
-								<div className="col-4">
-									<Field name="email" placeholder="Email" />
-									{errors.email && touched.email ? (
-										<div className="error mt-1">{errors.email}</div>
-									) : null}
-								</div>
-								<div className="col-4">
-									<Field
-										name="password"
-										placeholder="Password"
-										type="password"
-									/>
-									{errors.password && touched.password ? (
-										<div className="error mt-1">{errors.password}</div>
-									) : null}
-								</div>
-								<div className="col-4">
-									<Field
-										name="passwordConfirmation"
-										placeholder="Confirm Password"
-										type="password"
-									/>
-									{errors.passwordConfirmation &&
-									touched.passwordConfirmation ? (
-										<div className="error mt-1">
-											{errors.passwordConfirmation}
-										</div>
-									) : null}
-								</div>
-							</div>
-							<div className="row mt-4 form-item">
-								<div className="col text-center">
-									<button
-										className="btn btn-primary btn-bg-highlight"
-										type="submit"
-									>
-										Submit
-									</button>
-								</div>
-							</div>
-						</Form>
-					)}
-				</Formik>
+							</Form>
+						)}
+					</Formik>
+				</div>
 			</div>
 		);
 	}

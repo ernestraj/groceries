@@ -98,6 +98,24 @@ export function userLoginSuccess(login) {
 	};
 }
 
+export function getUserInfo(user_id) {
+	return function (dispatch) {
+		axios
+			.get(uri + "/user/" + user_id, {
+				params: {
+					_format: "json",
+				},
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + localStorage.getItem("ACCESS_TOKEN"),
+				},
+			})
+			.then(function (response) {
+				console.log(response);
+			});
+	};
+}
+
 export function loginUser(values) {
 	return function (dispatch) {
 		dispatch(userLoginInProgress());
