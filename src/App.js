@@ -3,10 +3,9 @@ import { Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import Home from "./components/Home";
-import RegistrationForm from "./components/RegistrationForm";
-import Login from "./components/Login";
-import NoMatch from "./components/NoMatch";
 import * as RegistrationAction from "./redux/actions/RegistrationAction";
+
+const UserContext = React.createContext("authenticated");
 
 class App extends Component {
 	constructor(props) {
@@ -15,40 +14,38 @@ class App extends Component {
 		this.props.actions.getUserInfo(user_id);
 	}
 	render() {
-		const route = this.props.location;
-		if (true) {
-			return (
-				<div id="content">
-					<Switch>
-						<Route
-							path="/register"
-							render={(props) => <RegistrationForm {...props} />}
-						/>
-						<Route path="/login" render={(props) => <Login {...props} />} />
-						<Route component={NoMatch} />
-					</Switch>
-				</div>
-			);
+		var links = [];
+		var routes = [];
+		if (this.props.user_data !== "undefined") {
+			links = this.props.links.authenticated.links;
+			routes = this.props.links.authenticated.routes;
 		} else {
-			return (
-				<div id="content">
-					<Switch>
-						<Route
-							key={route.path}
-							exact
-							path={route.path}
-							render={(props) => <Home route={this.props.links} {...props} />}
-						/>
-					</Switch>
-				</div>
-			);
+			links = this.props.links.anonymous.links;
+			routes = this.props.links.anonymous.routes;
 		}
+		const route = this.props.location;
+		return (
+			<div id="content">
+				<Switch>
+					<Route
+						key={route.path}
+						exact
+						path={route.path}
+						render={(props) => (
+							<Home routes={routes} links={links} {...props} />
+						)}
+					/>
+				</Switch>
+			</div>
+		);
 	}
 }
 
 function mapStateToProps(state) {
 	return {
 		links: state.content.menuLinks,
+		user_data: state.register.user_data,
+		error: state.register.error,
 	};
 }
 

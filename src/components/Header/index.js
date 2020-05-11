@@ -27,7 +27,7 @@ class Header extends Component {
 
 				<div className="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul className={"navbar-nav align-items-lg-center ixm-nav"}>
-						{this.props.links.map((link) => (
+						{this.props.routes.map((link) => (
 							<li key={link.path} className={"nav-item mb-4 mb-lg-0"}>
 								<NavLink
 									key={link.path}

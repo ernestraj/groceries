@@ -6,6 +6,8 @@ const uri = process.env.REACT_APP_CMS_URL;
 const grant_type = process.env.REACT_APP_GRANT_TYPE;
 const client_id = process.env.REACT_APP_CLIENT_ID;
 const client_secret = process.env.REACT_APP_CLIENT_SECRET;
+const access_token = localStorage.getItem("ACCESS_TOKEN");
+const refresh_token = localStorage.getItem("REFRESH_TOKEN");
 
 export function userRegistrationInProgress() {
 	return {
@@ -98,6 +100,47 @@ export function userLoginSuccess(login) {
 	};
 }
 
+export function getUerInfoSuccess(data) {
+	return {
+		type: actionTypes.USER_INFO_SUCCESS,
+		progress: false,
+		error: false,
+		user_data: data,
+	};
+}
+
+export function getUserInfoError() {
+	return {
+		type: actionTypes.USER_INFO_ERROR,
+		progress: false,
+		error: true,
+	};
+}
+
+export function updateAccessToken(user_id) {
+	const data = {
+		grant_type: "refresh_token",
+		client_id,
+		client_secret,
+		refresh_token,
+	};
+	axios
+		.post(uri + "/oauth/token", qs.stringify(data), {
+			headers: {
+				"Content-Type": "application/x-www-form-urlencoded",
+			},
+		})
+		.then(function (response) {
+			localStorage.setItem("ACCESS_TOKEN", response.data.access_token);
+			localStorage.setItem("REFRESH_TOKEN", response.data.refresh_token);
+			localStorage.setItem("USER_ID", response.data.user_id);
+			getUserInfo(user_id);
+		})
+		.catch((err) => {
+			getUserInfoError();
+		});
+}
+
 export function getUserInfo(user_id) {
 	return function (dispatch) {
 		axios
@@ -107,11 +150,16 @@ export function getUserInfo(user_id) {
 				},
 				headers: {
 					"Content-Type": "application/json",
-					Authorization: "Bearer " + localStorage.getItem("ACCESS_TOKEN"),
+					Authorization: "Bearer " + access_token,
 				},
 			})
 			.then(function (response) {
-				console.log(response);
+				dispatch(getUerInfoSuccess(response.data));
+			})
+			.catch((error) => {
+				if (error.response.status === 401) {
+					updateAccessToken(user_id);
+				}
 			});
 	};
 }

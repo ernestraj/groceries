@@ -4,19 +4,32 @@ import SearchPage from "../SearchPage";
 import AddGroceryForm from "../AddGroceryForm";
 import Dishes from "../Dishes";
 import HomePage from "../HomePage";
+import RegistrationForm from "../RegistrationForm";
+import Login from "../Login";
+import NoMatch from "../NoMatch";
 import "./index.scss";
+
+const components = {
+	"/search": SearchPage,
+	"/add-grocery-item": AddGroceryForm,
+	"/dishes": Dishes,
+	"/": HomePage,
+	"/login": Login,
+	"/register": RegistrationForm,
+};
 
 class Home extends Component {
 	render() {
-		console.log(this.props);
 		const { pathname } = this.props.location;
 		return (
 			<>
-				<Header />
-				{pathname === "/" && <HomePage />}
-				{pathname === "/search" && <SearchPage />}
-				{pathname === "/add-grocery-item" && <AddGroceryForm />}
-				{pathname === "/dishes" && <Dishes />}
+				<Header routes={this.props.links} />
+				{Object.keys(components).map((key, index) => {
+					if (key === pathname) {
+						const Component = components[key];
+						return <Component key={index} />;
+					}
+				})}
 			</>
 		);
 	}
