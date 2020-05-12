@@ -17,9 +17,11 @@ class App extends Component {
 		var links = [];
 		var routes = [];
 		if (this.props.user_data !== "undefined") {
+			console.log("hello");
 			links = this.props.links.authenticated.links;
 			routes = this.props.links.authenticated.routes;
 		} else {
+			console.log("123");
 			links = this.props.links.anonymous.links;
 			routes = this.props.links.anonymous.routes;
 		}
@@ -31,9 +33,7 @@ class App extends Component {
 						key={route.path}
 						exact
 						path={route.path}
-						render={(props) => (
-							<Home routes={routes} links={links} {...props} />
-						)}
+						render={(props) => <Home links={links} {...props} />}
 					/>
 				</Switch>
 			</div>

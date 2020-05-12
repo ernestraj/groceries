@@ -141,8 +141,17 @@ export function updateAccessToken(user_id) {
 		});
 }
 
+export function getUserInfoProgress() {
+	return {
+		action: actionTypes.USER_INFO_PROGRESS,
+		progress: true,
+		error: false,
+	};
+}
+
 export function getUserInfo(user_id) {
 	return function (dispatch) {
+		dispatch(getUserInfoProgress());
 		axios
 			.get(uri + "/user/" + user_id, {
 				params: {
