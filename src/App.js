@@ -5,25 +5,28 @@ import { bindActionCreators } from "redux";
 import Home from "./components/Home";
 import * as RegistrationAction from "./redux/actions/RegistrationAction";
 
-const UserContext = React.createContext("authenticated");
+var user_id = null;
 
 class App extends Component {
 	constructor(props) {
 		super(props);
-		const user_id = localStorage.getItem("USER_ID");
-		this.props.actions.getUserInfo(user_id);
+		user_id = localStorage.getItem("USER_ID");
+		user_id && this.props.actions.getUserInfo(user_id);
+		console.log("hello");
 	}
 	render() {
+		if (this.props.tokenError) {
+			this.props.actions.updateAccessToken(user_id);
+		}
 		var links = [];
-		var routes = [];
-		if (this.props.user_data !== "undefined") {
-			console.log("hello");
+		if (
+			this.props.progress != null &&
+			!this.props.progress &&
+			!this.props.error
+		) {
 			links = this.props.links.authenticated.links;
-			routes = this.props.links.authenticated.routes;
 		} else {
-			console.log("123");
 			links = this.props.links.anonymous.links;
-			routes = this.props.links.anonymous.routes;
 		}
 		const route = this.props.location;
 		return (
@@ -46,6 +49,8 @@ function mapStateToProps(state) {
 		links: state.content.menuLinks,
 		user_data: state.register.user_data,
 		error: state.register.error,
+		progress: state.register.progress,
+		tokenError: state.register.tokenError,
 	};
 }
 

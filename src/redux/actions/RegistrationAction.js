@@ -113,39 +113,41 @@ export function getUserInfoError() {
 	return {
 		type: actionTypes.USER_INFO_ERROR,
 		progress: false,
-		error: true,
+		tokenError: true,
 	};
-}
-
-export function updateAccessToken(user_id) {
-	const data = {
-		grant_type: "refresh_token",
-		client_id,
-		client_secret,
-		refresh_token,
-	};
-	axios
-		.post(uri + "/oauth/token", qs.stringify(data), {
-			headers: {
-				"Content-Type": "application/x-www-form-urlencoded",
-			},
-		})
-		.then(function (response) {
-			localStorage.setItem("ACCESS_TOKEN", response.data.access_token);
-			localStorage.setItem("REFRESH_TOKEN", response.data.refresh_token);
-			localStorage.setItem("USER_ID", response.data.user_id);
-			getUserInfo(user_id);
-		})
-		.catch((err) => {
-			getUserInfoError();
-		});
 }
 
 export function getUserInfoProgress() {
 	return {
-		action: actionTypes.USER_INFO_PROGRESS,
+		type: actionTypes.USER_INFO_PROGRESS,
 		progress: true,
 		error: false,
+	};
+}
+
+export function updateAccessToken(user_id) {
+	return function (dispatch) {
+		const data = {
+			grant_type: "refresh_token",
+			client_id,
+			client_secret,
+			refresh_token,
+		};
+		axios
+			.post(uri + "/oauth/token", qs.stringify(data), {
+				headers: {
+					"Content-Type": "application/x-www-form-urlencoded",
+				},
+			})
+			.then(function (response) {
+				localStorage.setItem("ACCESS_TOKEN", response.data.access_token);
+				localStorage.setItem("REFRESH_TOKEN", response.data.refresh_token);
+				localStorage.setItem("USER_ID", response.data.user_id);
+				dispatch(getUserInfo(user_id));
+			})
+			.catch((err) => {
+				dispatch(getUserInfoError());
+			});
 	};
 }
 
@@ -167,7 +169,7 @@ export function getUserInfo(user_id) {
 			})
 			.catch((error) => {
 				if (error.response.status === 401) {
-					updateAccessToken(user_id);
+					dispatch(getUserInfoError());
 				}
 			});
 	};

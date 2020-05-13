@@ -44,14 +44,15 @@ export default function GroceryReducer(state = initialState, action) {
 				progress: action.progress,
 				error: action.error,
 				user_data: action.user_data,
+				authenticated: "authenticated",
 			};
 		case actionTypes.USER_INFO_ERROR:
 			return {
 				...state,
 				progress: action.progress,
-				error: action.error,
+				tokenError: action.tokenError,
 			};
-		case actionTypes.USER_LOGIN_IN_PROGRESS:
+		case actionTypes.USER_INFO_PROGRESS:
 			return {
 				...state,
 				progress: action.progress,

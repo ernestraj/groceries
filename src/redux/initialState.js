@@ -6,22 +6,22 @@ export default {
 					{ title: "Add Grocery", path: "/add-grocery-item" },
 					{ title: "Dishes", path: "/dishes" },
 				],
-				routes: [
-					{ path: "/add-grocery-item", component: "AddGroceryForm" },
-					{ path: "/dishes", component: "Dishes" },
-				],
+				routes: ["/dishes", "/add-grocery-item", "/search"],
 			},
 			anonymous: {
 				links: [
 					{ title: "Register", path: "/register" },
 					{ title: "Login", path: "/login" },
 				],
-				routes: [
-					{ path: "/register", component: "RegistrationForm" },
-					{ path: "/login", component: "Login" },
-				],
+				routes: ["/login", "/register"],
 			},
 		},
 	},
 	titles: { titles: [], search_results: [], dishes: [] },
+	register: {
+		error: null,
+		progress: null,
+		authenticated: "anonymous",
+		tokenError: null,
+	},
 };
