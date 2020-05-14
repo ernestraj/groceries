@@ -109,11 +109,19 @@ export function getUerInfoSuccess(data) {
 	};
 }
 
+export function getUserInfoTokenError() {
+	return {
+		type: actionTypes.USER_INFO_TOKEN_ERROR,
+		progress: false,
+		tokenError: true,
+	};
+}
+
 export function getUserInfoError() {
 	return {
 		type: actionTypes.USER_INFO_ERROR,
 		progress: false,
-		tokenError: true,
+		error: true,
 	};
 }
 
@@ -140,10 +148,10 @@ export function updateAccessToken(user_id) {
 				},
 			})
 			.then(function (response) {
+				console.log("123");
 				localStorage.setItem("ACCESS_TOKEN", response.data.access_token);
 				localStorage.setItem("REFRESH_TOKEN", response.data.refresh_token);
 				localStorage.setItem("USER_ID", response.data.user_id);
-				dispatch(getUserInfo(user_id));
 			})
 			.catch((err) => {
 				dispatch(getUserInfoError());
@@ -169,7 +177,7 @@ export function getUserInfo(user_id) {
 			})
 			.catch((error) => {
 				if (error.response.status === 401) {
-					dispatch(getUserInfoError());
+					dispatch(getUserInfoTokenError());
 				}
 			});
 	};

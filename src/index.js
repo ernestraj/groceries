@@ -8,6 +8,7 @@ import configureStore, { history } from "./redux/configureStore";
 import { Provider as ReduxProvider } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
 import initialState from "./redux/initialState";
+import axios from "./axios";
 
 const store = configureStore(initialState);
 const AppWithRouter = withRouter(App);

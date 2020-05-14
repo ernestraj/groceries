@@ -12,12 +12,18 @@ class App extends Component {
 		super(props);
 		user_id = localStorage.getItem("USER_ID");
 		user_id && this.props.actions.getUserInfo(user_id);
-		console.log("hello");
 	}
-	render() {
+
+	componentDidUpdate() {
 		if (this.props.tokenError) {
 			this.props.actions.updateAccessToken(user_id);
 		}
+		if (!this.props.error && !this.props.user_data && user_id) {
+			this.props.actions.getUserInfo(user_id);
+		}
+	}
+
+	render() {
 		var links = [];
 		if (
 			this.props.progress != null &&
@@ -30,7 +36,7 @@ class App extends Component {
 		}
 		const route = this.props.location;
 		return (
-			<div id="content">
+			<div id="main">
 				<Switch>
 					<Route
 						key={route.path}

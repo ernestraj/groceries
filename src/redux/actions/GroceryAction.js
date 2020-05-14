@@ -2,6 +2,7 @@ import * as actionTypes from "./actionTypes";
 import axios from "axios";
 
 const uri = process.env.REACT_APP_CMS_URL;
+const access_token = localStorage.getItem("ACCESS_TOKEN");
 
 export function loadGroceriesRequest() {
 	return {
@@ -62,16 +63,19 @@ export function loadGroceryItemsWithStore(
 	return function (dispatch) {
 		dispatch(loadGroceriesWithStoreRequest());
 		dispatch(saveGroceryItemQuery(grocery_item));
-		axios({
-			method: "get",
-			url: uri + "/item/" + grocery_item[0].nid,
-			params: {
-				latitude: latitude,
-				longitude: longitude,
-			},
-		}).then(function (response) {
-			dispatch(loadGroceriesWithStoreSuccess(response.data));
-		});
+		axios
+			.get(uri + "/item/" + grocery_item[0].nid, {
+				params: {
+					latitude: latitude,
+					longitude: longitude,
+				},
+				headers: {
+					Authorization: "Bearer " + access_token,
+				},
+			})
+			.then(function (response) {
+				dispatch(loadGroceriesWithStoreSuccess(response.data));
+			});
 	};
 }
 

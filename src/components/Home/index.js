@@ -38,7 +38,9 @@ class Home extends Component {
 		return (
 			<>
 				<Header routes={this.props.links} />
-				<Component />
+				<div id="content" className="container">
+					<Component />
+				</div>
 			</>
 		);
 	}

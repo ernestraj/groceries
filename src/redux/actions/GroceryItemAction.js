@@ -2,6 +2,7 @@ import * as actionTypes from "./actionTypes";
 import axios from "axios";
 
 const uri = process.env.REACT_APP_CMS_URL;
+const access_token = localStorage.getItem("ACCESS_TOKEN");
 
 export function loadBrandAutoCompleteRequest() {
 	return {
@@ -105,7 +106,6 @@ export function saveGroceryItem(values) {
 		data.grocery_id = grocery_id ? grocery_id.nid : null;
 		data.brand_id = brand_id ? brand_id.tid : null;
 		data.aisle_id = aisle_id ? aisle_id.tid : null;
-		console.log(data);
 		axios
 			.post(uri + "/item/create", data, {
 				headers: {
