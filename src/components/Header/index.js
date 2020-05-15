@@ -8,6 +8,7 @@ import "./index.scss";
 
 class Header extends Component {
 	render() {
+		const userState = this.props.authenticated;
 		return (
 			<nav className="navbar navbar-expand-lg navbar-light header__inner">
 				<a className="navbar-brand" href="/">
@@ -27,7 +28,7 @@ class Header extends Component {
 
 				<div className="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul className={"navbar-nav align-items-lg-center ixm-nav"}>
-						{this.props.routes.map((link) => (
+						{this.props.links[userState].links.map((link) => (
 							<li key={link.path} className={"nav-item mb-4 mb-lg-0"}>
 								<NavLink
 									key={link.path}
@@ -50,6 +51,7 @@ class Header extends Component {
 function mapStateToProps(state) {
 	return {
 		links: state.content.menuLinks,
+		authenticated: state.register.authenticated,
 	};
 }
 

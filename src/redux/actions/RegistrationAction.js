@@ -100,6 +100,15 @@ export function userLoginSuccess(login) {
 	};
 }
 
+export function userLoginError(msg) {
+	return {
+		type: actionTypes.USER_LOGIN_ERROR,
+		progress: false,
+		error: true,
+		msg,
+	};
+}
+
 export function getUerInfoSuccess(data) {
 	return {
 		type: actionTypes.USER_INFO_SUCCESS,
@@ -148,7 +157,6 @@ export function updateAccessToken(user_id) {
 				},
 			})
 			.then(function (response) {
-				console.log("123");
 				localStorage.setItem("ACCESS_TOKEN", response.data.access_token);
 				localStorage.setItem("REFRESH_TOKEN", response.data.refresh_token);
 				localStorage.setItem("USER_ID", response.data.user_id);
@@ -208,10 +216,8 @@ export function loginUser(values) {
 			})
 			.catch((err) => {
 				let msg = "";
-				if (err.response.data.message.split(":")[2]) {
-					msg = "Email has already been taken.";
-				}
-				dispatch(userRegistrationCatchError(msg));
+				msg = err.response.data.error_description;
+				dispatch(userLoginError(msg));
 			});
 	};
 }

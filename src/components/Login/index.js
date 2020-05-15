@@ -13,6 +13,7 @@ class Login extends Component {
 		password: Yup.string().required("Password is required"),
 	});
 	render() {
+		console.log(this.props.msg);
 		if (this.props.login) {
 			return <Redirect to={"/add-grocery-item"} />;
 		}
@@ -65,6 +66,13 @@ class Login extends Component {
 										</button>
 									</div>
 								</div>
+								{this.props.msg ? (
+									<div className="row mt-3">
+										<div className="col error text-center">
+											{this.props.msg}
+										</div>
+									</div>
+								) : null}
 							</Form>
 						)}
 					</Formik>
@@ -79,6 +87,7 @@ function mapStateToProps(state) {
 		progress: state.register.progress,
 		error: state.register.error,
 		login: state.register.login,
+		msg: state.register.msg,
 	};
 }
 

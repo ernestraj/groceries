@@ -38,6 +38,13 @@ export default function GroceryReducer(state = initialState, action) {
 				error: action.error,
 				login: action.login,
 			};
+		case actionTypes.USER_LOGIN_ERROR:
+			return {
+				...state,
+				progress: action.progress,
+				error: action.error,
+				msg: action.msg,
+			};
 		case actionTypes.USER_INFO_SUCCESS:
 			return {
 				...state,

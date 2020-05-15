@@ -14,15 +14,6 @@ class App extends Component {
 		user_id && this.props.actions.getUserInfo(user_id);
 	}
 
-	componentDidUpdate() {
-		if (this.props.tokenError) {
-			this.props.actions.updateAccessToken(user_id);
-		}
-		if (!this.props.error && !this.props.user_data && user_id) {
-			this.props.actions.getUserInfo(user_id);
-		}
-	}
-
 	render() {
 		var links = [];
 		if (
@@ -56,7 +47,6 @@ function mapStateToProps(state) {
 		user_data: state.register.user_data,
 		error: state.register.error,
 		progress: state.register.progress,
-		tokenError: state.register.tokenError,
 	};
 }
 

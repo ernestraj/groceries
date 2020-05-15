@@ -37,7 +37,7 @@ class Home extends Component {
 		else Component = NoMatch;
 		return (
 			<>
-				<Header routes={this.props.links} />
+				<Header />
 				<div id="content" className="container">
 					<Component />
 				</div>
