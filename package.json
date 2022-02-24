@@ -60,7 +60,7 @@
   },
   "devDependencies": {
     "cra-build-watch": "^3.0.0",
-    "node-sass": "^4.13.0",
+    "node-sass": "^7.0.0",
     "react-app-rewired": "^2.1.5",
     "sass-loader": "^8.0.0"
   }
